@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data Analysis Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .anova-box {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .anova-significant {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .anova-not-significant {
+            color: #6c757d;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(102, 126, 234, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1 class="text-center mb-0">🌤️ Weather Data Analysis Dashboard</h1>
+            <p class="text-center mb-0 mt-2">Interactive visualization and statistical analysis</p>
+            <p class="text-center mb-0 mt-1"><small>Analyzing: <strong>{{ filename }}</strong></small></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="text-center mb-4">
+            <a href="/" class="btn btn-outline-primary">📤 Upload Another File</a>
+        </div>
+        <!-- Overall Temperature Statistics -->
+        <h2 class="mb-4">📊 Overall Temperature Statistics</h2>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <div class="stat-label">Mean Temperature</div>
+                    <div class="stat-value">{{ data.temp_stats.mean }}°C</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <div class="stat-label">Median Temperature</div>
+                    <div class="stat-value">{{ data.temp_stats.median }}°C</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <div class="stat-label">Mode Temperature</div>
+                    <div class="stat-value">{{ data.temp_stats.mode }}°C</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <div class="stat-label">Standard Deviation</div>
+                    <div class="stat-value">{{ data.temp_stats.std }}°C</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Charts -->
+        <h2 class="mb-4 mt-5">📈 Temperature Trends</h2>
+        <div class="chart-container">
+            {{ data.temp_trend_chart | safe }}
+        </div>
+
+        <div class="chart-container">
+            {{ data.bar_chart | safe }}
+        </div>
+
+        <h2 class="mb-4 mt-5">🌧️ Rainfall Analysis</h2>
+        <div class="chart-container">
+            {{ data.rainfall_chart | safe }}
+        </div>
+
+        <!-- Monthly Summary Table -->
+        <h2 class="mb-4 mt-5">📅 Monthly Temperature Summary</h2>
+        <div class="chart-container">
+            {{ data.monthly_table | safe }}
+        </div>
+
+        <!-- ANOVA Test Results -->
+        <h2 class="mb-4 mt-5">🔬 Statistical Test (ANOVA)</h2>
+        <div class="anova-box">
+            <p><strong>Question:</strong> Does average temperature differ significantly across months?</p>
+            <p><strong>F-statistic:</strong> {{ data.anova.f_stat }}</p>
+            <p><strong>P-value:</strong> {{ data.anova.p_value }}</p>
+            {% if data.anova.significant %}
+                <p class="anova-significant">✓ Reject H₀: Average temperature differs significantly across months.</p>
+            {% else %}
+                <p class="anova-not-significant">✗ Fail to reject H₀: No significant difference in monthly average temperature.</p>
+            {% endif %}
+        </div>
+
+        <footer class="text-center text-muted py-4">
+            <p>Weather Data Analysis Project | Powered by Flask & Plotly</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

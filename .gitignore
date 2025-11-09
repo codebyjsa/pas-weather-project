@@ -1,0 +1,51 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+*.manifest
+*.spec
+
+# === Virtual Environments ===
+venv/
+env/
+ENV/
+.venv/
+.virtualenv/
+.conda/
+*.env
+
+# === Jupyter / IPython ===
+.ipynb_checkpoints
+.profile_default/
+ipython_config.py
+
+# === Logs / Databases ===
+*.log
+*.sqlite3
+*.db
+
+# === VS Code / PyCharm ===
+.vscode/
+.idea/
+
+# === OS-generated files ===
+.DS_Store
+Thumbs.db
+
+# === Data files ===
+*.csv
+*.xlsx
+*.xls
+*.json
+*.parquet
+
+# === Others ===
+__MACOSX/
