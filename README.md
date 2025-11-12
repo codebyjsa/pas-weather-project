@@ -193,7 +193,6 @@ pas-weather-project/
 ├── weather_analysis.py         # Analysis logic and chart generation
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # Project documentation (this file)
-├── DEPLOYMENT.md              # Deployment guide
 ├── .gitignore                 # Git ignore rules
 │
 ├── templates/                 # HTML templates
